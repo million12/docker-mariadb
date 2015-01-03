@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER Marcin Ryzycki marcin@m12.io
+MAINTAINER Marcin Ryzycki marcin@m12.io, Przemyslaw Ozgo linux@ozgo.info
 
 RUN \
     yum update -y && \
