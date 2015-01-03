@@ -1,0 +1,11 @@
+machine:
+  services:
+    - docker
+dependencies:
+  override:
+    - docker build -t million12/mariadb
+
+test:
+  override:
+    - docker run -d -p 13306:3306 -e MARIADB_PASS="mypass" million12/mariadb; sleep 20
+    - mysqladmin -uadmin -pmypass -h127.0.0.1 -P13306 ping | grep -c "mysqld is alive"
