@@ -1,13 +1,15 @@
 FROM centos:centos7
 MAINTAINER Marcin Ryzycki marcin@m12.io, Przemyslaw Ozgo linux@ozgo.info
 
+COPY mariadb.repo /etc/yum.repos.d/
+
 RUN \
     yum update -y && \
     yum install -y epel-release && \
-    yum install -y mariadb-server pwgen && \
+    yum install -y MariaDB-server hostname pwgen && \
     yum clean all && \
     rm -rf /var/lib/mysql/* && \
-    mysql_install_db --user=mysql --ldata=/var/lib/mysql/
+    mysql_install_db  --user=mysql
 
 ADD create_mariadb_admin_user.sh /create_mariadb_admin_user.sh
 ADD run.sh /run.sh
