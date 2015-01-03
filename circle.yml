@@ -7,5 +7,5 @@ dependencies:
 
 test:
   override:
-    - docker run -d -p 13306:3306 -e MARIADB_PASS="mypass" mariadb; sleep 20
+    - docker run -d -h $HOSTNAME -p 13306:3306 -e MARIADB_PASS="mypass" mariadb; sleep 20
     - mysqladmin -uadmin -pmypass -h127.0.0.1 -P13306 ping | grep -c "mysqld is alive"
