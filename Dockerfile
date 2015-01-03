@@ -8,8 +8,7 @@ RUN \
     yum install -y epel-release && \
     yum install -y MariaDB-server hostname pwgen && \
     yum clean all && \
-    rm -rf /var/lib/mysql/* && \
-    mysql_install_db  --user=mysql
+    rm -rf /var/lib/mysql/* 
 
 ADD create_mariadb_admin_user.sh /create_mariadb_admin_user.sh
 ADD run.sh /run.sh
