@@ -8,11 +8,10 @@ RUN \
     yum install -y epel-release && \
     yum install -y MariaDB-server hostname pwgen && \
     yum clean all && \
-    rm -rf /var/lib/mysql/* 
+    rm -rf /var/lib/mysql/*
 
 ADD create_mariadb_admin_user.sh /create_mariadb_admin_user.sh
 ADD run.sh /run.sh
-ADD my.cnf /etc/my.cnf
 RUN chmod 775 /*.sh
 
 # Add VOLUMEs to allow backup of config and databases
