@@ -3,7 +3,7 @@ machine:
     - docker
 dependencies:
   override:
-    - docker build -t mariadb /
+    - docker build -t mariadb .
 
 test:
   override:
