@@ -1,7 +1,7 @@
 FROM centos:centos7
 MAINTAINER Marcin Ryzycki marcin@m12.io, Przemyslaw Ozgo linux@ozgo.info
 
-COPY mariadb.repo /etc/yum.repos.d/
+COPY container-files /
 
 RUN \
     yum update -y && \
@@ -9,10 +9,6 @@ RUN \
     yum install -y MariaDB-server hostname pwgen && \
     yum clean all && \
     rm -rf /var/lib/mysql/*
-
-ADD create_mariadb_admin_user.sh /create_mariadb_admin_user.sh
-ADD run.sh /run.sh
-RUN chmod 775 /*.sh
 
 # Add VOLUMEs to allow backup of config and databases
 VOLUME  ["/etc/mysql", "/var/lib/mysql"]
