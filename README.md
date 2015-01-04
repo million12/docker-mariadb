@@ -1,19 +1,19 @@
-# MariaDB (10.0.15) Docker Image (Centos7)
+# MariaDB 10.0 Docker Image (Centos7)
 [![Circle CI](https://circleci.com/gh/million12/docker-mariadb.svg?style=svg)](https://circleci.com/gh/million12/docker-mariadb)
 
-This is a MariaDB 10.0.15 Docker [million12/docker-mariadb](https://github.com/million12/docker-mariadb) image, for easy deployments with other [Million12](http://million12.io) Images. Built on official [centos:centos7](https://registry.hub.docker.com/_/centos/) image.  
+This is a MariaDB 10.0 Docker [million12/mariadb](https://registry.hub.docker.com/u/million12/mariadb/) image. Built on top of official [centos:centos7](https://registry.hub.docker.com/_/centos/) image and heavily inspired by [tutum](https://github.com/tutumcloud)'s work on their [tutum/mariadb](https://github.com/tutumcloud/tutum-docker-mariadb) image.
 
-### Usage
-To create the image `million12/mariadb` on your server, execute following command:  
+## Usage
 
+`docker pull million12/mariadb`
+
+Or, if you prefer to build it on your own:  
 `docker build -t million12/mariadb .`  
 
-Run the image as deamon and bind it to port 3306:  
-
+Run the image as daemon and bind it to port 3306:  
 `docker run -d -p 3306:3306 million12/mariadb`  
 
 The first time that you run your container, a new user admin with all privileges will be created in MariaDB with a random password. To get the password, check the logs of the container by running:  
-
 `docker logs <CONTAINER_ID>`  
 
 You will see an output like the following:
@@ -50,7 +50,6 @@ After this you can start your MariaDB image using volumes in the container creat
 
 Author: Marcin Ryzycki (<marcin@m12.io>)  
 Author: Przemyslaw Ozgo (<linux@ozgo.info>)  
-This work is also inspired by [tutum](https://github.com/tutumcloud)'s work on his [mariadb docker image](https://github.com/tutumcloud/tutum-docker-mariadb). Many thanks!
 
 ---
 
