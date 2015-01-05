@@ -1,7 +1,8 @@
 FROM centos:centos7
 MAINTAINER Marcin Ryzycki marcin@m12.io, Przemyslaw Ozgo linux@ozgo.info
 
-COPY container-files /
+# Copy only file(s) required for the next RUN commands (leverage Docker caching)
+COPY container-files/etc/yum.repos.d/* /etc/yum.repos.d/
 
 RUN \
     yum update -y && \
@@ -10,11 +11,11 @@ RUN \
     yum clean all && \
     rm -rf /var/lib/mysql/*
 
-# Add VOLUMEs to allow backup of config and databases
-VOLUME  ["/etc/mysql", "/var/lib/mysql"]
+# Add all remaining files to the container
+COPY container-files /
 
-#Added to avoid in container connection to the database with mysql client error message "TERM environment variable not set"
-ENV TERM dumb
+# Add VOLUME to allow backup of data
+VOLUME ["/var/lib/mysql"]
 
 EXPOSE 3306
 CMD ["/run.sh"]

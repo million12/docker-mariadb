@@ -1,0 +1,3 @@
+[mysqld]
+pid_file=/var/lib/mysql/mysql.pid
+log_error=/var/lib/mysql/error.log

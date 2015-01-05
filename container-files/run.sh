@@ -1,15 +1,26 @@
 #!/bin/bash
 
+set -e
+set -u
+source ./mariadb-functions.sh
+
 VOLUME_HOME="/var/lib/mysql"
+ERROR_LOG="/var/lib/mysql/error.log"
+MARIADB_USER=${MARIADB_USER:="admin"}
+MARIADB_PASS=${MARIADB_PASS:-$(pwgen -s 12 1)}
 
-if [[ ! -d $VOLUME_HOME/mysql ]]; then
-    echo "=> An empty or uninitialized MariaDB volume is detected in $VOLUME_HOME"
-    echo "=> Installing MariaDB ..."
-    mysql_install_db --user=mysql > /dev/null 2>&1
-    echo "=> Done!"
-    /create_mariadb_admin_user.sh
-else
-    echo "=> Using an existing volume of MariaDB"
-fi
+# trap INT and TERM signals to do clean DB shutdown
+trap terminate_db SIGINT SIGTERM
 
-exec mysqld_safe
+install_db
+tail -F $ERROR_LOG & # tail all db logs to stdout 
+
+/usr/bin/mysqld_safe & # Launch DB server in the background
+MYSQLD_SAFE_PID=$!
+
+wait_for_db
+show_db_status
+create_admin_user
+
+# Do not exit this script untill mysqld_safe exits gracefully
+wait $MYSQLD_SAFE_PID
