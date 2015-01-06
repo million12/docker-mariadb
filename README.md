@@ -1,17 +1,17 @@
 # MariaDB 10.0 Docker Image (Centos7)
 [![Circle CI](https://circleci.com/gh/million12/docker-mariadb.svg?style=svg)](https://circleci.com/gh/million12/docker-mariadb)
 
-This is a MariaDB 10.0 Docker [million12/mariadb](https://registry.hub.docker.com/u/million12/mariadb/) image. Built on top of official [centos:centos7](https://registry.hub.docker.com/_/centos/) image and heavily inspired by [tutum](https://github.com/tutumcloud)'s work on their [tutum/mariadb](https://github.com/tutumcloud/tutum-docker-mariadb) image.
+This is a MariaDB 10.0 Docker [million12/mariadb](https://registry.hub.docker.com/u/million12/mariadb/) image. Built on top of official [centos:centos7](https://registry.hub.docker.com/_/centos/) image. Inspired by [Tutum](https://github.com/tutumcloud)'s [tutum/mariadb](https://github.com/tutumcloud/tutum-docker-mariadb) image.
 
 ## Usage
 
 `docker pull million12/mariadb`
 
 Or, if you prefer to build it on your own:  
-`docker build -t million12/mariadb .`  
+`docker build -t million12/mariadb .`
 
 Run the image as daemon and bind it to port 3306:  
-`docker run -d -p 3306:3306 million12/mariadb`  
+`docker run -d -p 3306:3306 million12/mariadb`
 
 The first time that you run your container, a new user admin with all privileges will be created in MariaDB with a random password. To get the password, check the logs of the container by running:  
 `docker logs <CONTAINER_ID>`  
@@ -22,7 +22,7 @@ You will see an output like the following:
 	========================================================================
     You can now connect to this MariaDB Server using:
 
-        mysql -uadmin -pCoFlnc3ZBS58 -h<host> -P<port>
+        mysql -uadmin -pCoFlnc3ZBS58 -h<host>
 
     Please remember to change the above password as soon as possible!       
     MariaDB user 'root' has no password but only allows local connections

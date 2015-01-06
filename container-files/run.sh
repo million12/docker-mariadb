@@ -4,12 +4,13 @@ set -e
 set -u
 source ./mariadb-functions.sh
 
-VOLUME_HOME="/var/lib/mysql"
-ERROR_LOG="/var/lib/mysql/error.log"
+# User-provided env variables
 MARIADB_USER=${MARIADB_USER:="admin"}
 MARIADB_PASS=${MARIADB_PASS:-$(pwgen -s 12 1)}
 
-# trap INT and TERM signals to do clean DB shutdown
+# Other variables
+VOLUME_HOME="/var/lib/mysql"
+ERROR_LOG="$VOLUME_HOME/error.log"
 MYSQLD_PID_FILE="$VOLUME_HOME/mysql.pid"
 
 # Trap INT and TERM signals to do clean DB shutdown
@@ -22,6 +23,7 @@ tail -F $ERROR_LOG & # tail all db logs to stdout
 MYSQLD_SAFE_PID=$!
 
 wait_for_db
+secure_and_tidy_db
 show_db_status
 create_admin_user
 

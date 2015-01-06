@@ -61,7 +61,7 @@ function install_db() {
     mv -f $ERROR_LOG "${ERROR_LOG}.old";
   fi
 
-  touch $ERROR_LOG
+  touch $ERROR_LOG && chown mysql $ERROR_LOG
 }
 
 #########################################################
@@ -72,8 +72,6 @@ function install_db() {
 #   $MARIADB_PASS
 #########################################################
 function create_admin_user() {
-  wait_for_db
-  
   local users=$(mysql -s -e "SELECT count(User) FROM mysql.user WHERE User='$MARIADB_USER'")
   if [[ $users == 0 ]]; then
     echo "=> Creating MariaDB user '$MARIADB_USER' with '$MARIADB_PASS' password."
@@ -97,6 +95,12 @@ function create_admin_user() {
 }
 
 function show_db_status() {
-  wait_for_db
   mysql -uroot -e "status"
+}
+
+function secure_and_tidy_db() {
+  mysql -uroot -e "DROP DATABASE IF EXISTS test"
+  mysql -uroot -e "DELETE FROM mysql.user where User = ''"
+  # Remove warning about users with hostnames (as DB is configured with skip_name_resolve)
+  mysql -uroot -e "DELETE FROM mysql.user where User = 'root' AND Host NOT IN ('127.0.0.1','::1','localhost')"
 }
