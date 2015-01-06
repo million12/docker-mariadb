@@ -4,11 +4,15 @@ machine:
 
 dependencies:
   override:
-    - docker build -t mariadb .
+    - docker build -t million12/mariadb .
 
 test:
   override:
-    - docker run -d -h $HOSTNAME -p 13306:3306 -e MARIADB_PASS="mypass" mariadb && sleep 20
+    - docker run -d -p 13306:3306 -e MARIADB_PASS="mypass" --name db million12/mariadb
+    - docker logs -f db > ${CIRCLE_ARTIFACTS}/docker-db.log:
+        background: true
+    # Wait till DB is fully bootstrapped
+    - while true; do if grep "ready for connections" ${CIRCLE_ARTIFACTS}/docker-db.log; then break; else sleep 1; fi done
     
     - mysqladmin -uadmin -pmypass -h127.0.0.1 -P13306 ping
     - mysql -uadmin -pmypass -h127.0.0.1 -P13306 -e "show databases"
