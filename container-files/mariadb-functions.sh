@@ -23,7 +23,7 @@ function wait_for_db() {
 #########################################################
 function terminate_db() {
   local pid=$(cat $VOLUME_HOME/mysql.pid)
-  echo "Caught SIGTERM signal, exiting DB process (pid $pid)..."
+  echo "Caught SIGTERM signal, shutting down DB..."
   kill -TERM $pid
   
   while true; do
@@ -42,7 +42,7 @@ function install_db() {
   if [ ! -d $VOLUME_HOME/mysql ]; then
     echo "=> An empty/uninitialized MariaDB volume is detected in $VOLUME_HOME"
     echo "=> Installing MariaDB..."
-    mysql_install_db --user=mysql
+    mysql_install_db --user=mysql > /dev/null 2>&1
     echo "=> Done!"
   else
     echo "=> Using an existing volume of MariaDB."
@@ -77,7 +77,7 @@ function create_admin_user() {
     mysql -uroot -e "CREATE USER '$MARIADB_USER'@'%' IDENTIFIED BY '$MARIADB_PASS'"
   else
     echo "=> User '$MARIADB_USER' exists, updating its password to '$MARIADB_PASS'"
-    mysql -uroot -e "SET PASSWORD FOR '$MARIADB_USER'@'%' = PASSWORD('$MARIADB_USER')"
+    mysql -uroot -e "SET PASSWORD FOR '$MARIADB_USER'@'%' = PASSWORD('$MARIADB_PASS')"
   fi;
   
   mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO '$MARIADB_USER'@'%' WITH GRANT OPTION"
@@ -88,7 +88,7 @@ function create_admin_user() {
   echo "                                                                        "
   echo "    mysql -u$MARIADB_USER -p$MARIADB_PASS -h<host>                      "
   echo "                                                                        "
-  echo "For security reasons, remember to change the above password.            "
+  echo "For security reasons, you might want to change the above password.      "
   echo "MariaDB user 'root' has no password but only allows local connections   "
   echo "========================================================================"
 }
