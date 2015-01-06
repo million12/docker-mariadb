@@ -10,6 +10,9 @@ MARIADB_USER=${MARIADB_USER:="admin"}
 MARIADB_PASS=${MARIADB_PASS:-$(pwgen -s 12 1)}
 
 # trap INT and TERM signals to do clean DB shutdown
+MYSQLD_PID_FILE="$VOLUME_HOME/mysql.pid"
+
+# Trap INT and TERM signals to do clean DB shutdown
 trap terminate_db SIGINT SIGTERM
 
 install_db
