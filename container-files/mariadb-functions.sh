@@ -82,7 +82,6 @@ function create_admin_user() {
   fi;
   
   mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO '$MARIADB_USER'@'%' WITH GRANT OPTION"
-  mysql -uroot -e "FLUSH PRIVILEGES"
 
   echo "========================================================================"
   echo "You can now connect to this MariaDB Server using:                       "
