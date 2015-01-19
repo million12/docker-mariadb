@@ -6,12 +6,12 @@
 # service is already available for connections.
 #########################################################
 function wait_for_db() {
-  local RET=1
   set +e
-  while [[ RET -ne 0 ]]; do
+  local res=1
+  while [[ $res != 0 ]]; do
     mysql -uroot -e "status" > /dev/null 2>&1
-    RET=$?
-    if [[ RET -ne 0 ]]; then echo "Waiting for DB service..." && sleep 1; fi
+    res=$?
+    if [[ $res != 0 ]]; then echo "Waiting for DB service..." && sleep 1; fi
     # If mysql process died at this stage (which might happen if e.g. wrong
     # config was provided), break the loop. Otherwise the loop never ends!
     if [[ ! -f $MYSQLD_PID_FILE ]]; then break; fi
