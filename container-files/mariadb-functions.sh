@@ -100,6 +100,8 @@ function show_db_status() {
 function secure_and_tidy_db() {
   mysql -uroot -e "DROP DATABASE IF EXISTS test"
   mysql -uroot -e "DELETE FROM mysql.user where User = ''"
+  
   # Remove warning about users with hostnames (as DB is configured with skip_name_resolve)
-  mysql -uroot -e "DELETE FROM mysql.user where User = 'root' AND Host NOT IN ('127.0.0.1','::1','localhost')"
+  mysql -uroot -e "DELETE FROM mysql.user where User = 'root' AND Host NOT IN ('127.0.0.1','::1')"
+  mysql -uroot -e "DELETE FROM mysql.proxies_priv where User = 'root' AND Host NOT IN ('127.0.0.1','::1')"
 }
