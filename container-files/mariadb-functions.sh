@@ -8,10 +8,13 @@
 function wait_for_db() {
   set +e
   local res=1
+  
+  echo "Waiting for DB service..."
+  
   while [[ $res != 0 ]]; do
     mysql -uroot -e "status" > /dev/null 2>&1
     res=$?
-    if [[ $res != 0 ]]; then echo "Waiting for DB service..." && sleep 1; fi
+    if [[ $res != 0 ]]; then echo "Still waiting for DB service..." && sleep 1; fi
     # If mysql process died at this stage (which might happen if e.g. wrong
     # config was provided), break the loop. Otherwise the loop never ends!
     if [[ ! -f $MYSQLD_PID_FILE ]]; then break; fi
@@ -46,7 +49,7 @@ function install_db() {
     echo "=> An empty/uninitialized MariaDB volume is detected in $VOLUME_HOME"
     echo "=> Installing MariaDB..."
     mysql_install_db --user=mysql > /dev/null 2>&1
-    echo "=> Done!"
+    echo "=> Installing MariaDB... Done!"
   else
     echo "=> Using an existing volume of MariaDB."
   fi
@@ -72,6 +75,7 @@ function install_db() {
 #   $MARIADB_PASS
 #########################################################
 function create_admin_user() {
+  echo "Creating DB admin user..." && echo
   local users=$(mysql -s -e "SELECT count(User) FROM mysql.user WHERE User='$MARIADB_USER'")
   if [[ $users == 0 ]]; then
     echo "=> Creating MariaDB user '$MARIADB_USER' with '$MARIADB_PASS' password."
@@ -84,24 +88,26 @@ function create_admin_user() {
   mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO '$MARIADB_USER'@'%' WITH GRANT OPTION"
 
   echo "========================================================================"
-  echo "You can now connect to this MariaDB Server using:                       "
-  echo "                                                                        "
+  echo "    You can now connect to this MariaDB Server using:                   "
   echo "    mysql -u$MARIADB_USER -p$MARIADB_PASS -h<host>                      "
   echo "                                                                        "
-  echo "For security reasons, you might want to change the above password.      "
-  echo "MariaDB user 'root' has no password but only allows local connections   "
+  echo "    For security reasons, you might want to change the above password.  "
+  echo "    The 'root' user has no password but only allows local connections   "
   echo "========================================================================"
 }
 
 function show_db_status() {
+  echo "Showing DB status..." && echo
   mysql -uroot -e "status"
 }
 
 function secure_and_tidy_db() {
+  echo "Securing and tidying DB..."
   mysql -uroot -e "DROP DATABASE IF EXISTS test"
   mysql -uroot -e "DELETE FROM mysql.user where User = ''"
   
   # Remove warning about users with hostnames (as DB is configured with skip_name_resolve)
   mysql -uroot -e "DELETE FROM mysql.user where User = 'root' AND Host NOT IN ('127.0.0.1','::1')"
   mysql -uroot -e "DELETE FROM mysql.proxies_priv where User = 'root' AND Host NOT IN ('127.0.0.1','::1')"
+  echo "Securing and tidying DB... Done!"
 }
