@@ -7,18 +7,16 @@
 #########################################################
 function wait_for_db() {
   set +e
-  local res=1
   
   echo "Waiting for DB service..."
-  
-  while [[ $res != 0 ]]; do
-    mysql -uroot -e "status" > /dev/null 2>&1
-    res=$?
-    if [[ $res != 0 ]]; then echo "Still waiting for DB service..." && sleep 1; fi
-    # If mysql process died at this stage (which might happen if e.g. wrong
-    # config was provided), break the loop. Otherwise the loop never ends!
-    if [[ ! -f $MYSQLD_PID_FILE ]]; then break; fi
+  while true; do
+    if grep "ready for connections" $ERROR_LOG; then
+      break;
+    else
+      echo "Still waiting for DB service..." && sleep 1
+    fi
   done
+  
   set -e
 }
 
