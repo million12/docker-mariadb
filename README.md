@@ -3,6 +3,8 @@
 
 This is a MariaDB 10.0 Docker [million12/mariadb](https://registry.hub.docker.com/u/million12/mariadb/) image. Built on top of official [centos:centos7](https://registry.hub.docker.com/_/centos/) image. Inspired by [Tutum](https://github.com/tutumcloud)'s [tutum/mariadb](https://github.com/tutumcloud/tutum-docker-mariadb) image.
 
+Note: be aware that, by default in this container, MariaDB is configured to use 1GB memory (innodb_buffer_pool_size in [tuning.cnf](container-files/etc/my.cnf.d/tuning.cnf)). If you try to run it on node with less memory, it will fail.
+
 ## Usage
 
 `docker pull million12/mariadb`
