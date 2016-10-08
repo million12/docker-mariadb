@@ -1,5 +1,5 @@
 # MariaDB 10 Docker Image (Centos7)
-[![CircleCI Build Status](https://img.shields.io/circleci/project/million12/docker-mariadb/master.svg)](https://circleci.com/gh/million12/docker-mariadb/tree/master)
+[![CircleCI Build Status](https://img.shields.io/circleci/project/million12/docker-mariadb/10.0.svg)](https://circleci.com/gh/million12/docker-mariadb/tree/10.0)
 [![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-mariadb.svg)](https://github.com/million12/docker-mariadb/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/million12/docker-mariadb.svg)](https://github.com/million12/docker-mariadb)
 [![GitHub Forks](https://img.shields.io/github/forks/million12/docker-mariadb.svg)](https://github.com/million12/docker-mariadb)  
