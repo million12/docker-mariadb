@@ -3,7 +3,7 @@ MAINTAINER Marcin Ryzycki marcin@m12.io, Przemyslaw Ozgo linux@ozgo.info
 
 # Set TERM env to avoid mysql client error message "TERM environment variable not set" when running from inside the container
 ENV TERM=xterm \
-    MARIADB_VERSION=10.2
+    MARIADB_VERSION=10.0
 
 # Copy only files required for the following RUN commands (leverage Docker caching)
 COPY container-files /
