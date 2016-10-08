@@ -1,5 +1,5 @@
 # MariaDB 10 Docker Image (Centos7)
-[![CircleCI Build Status](https://img.shields.io/circleci/project/million12/docker-mariadb/master.svg)](https://circleci.com/gh/million12/docker-mariadb/tree/master)
+[![CircleCI Build Status](https://img.shields.io/circleci/project/million12/docker-mariadb/10.2.svg)](https://circleci.com/gh/million12/docker-mariadb/tree/10.2)
 [![GitHub Open Issues](https://img.shields.io/github/issues/million12/docker-mariadb.svg)](https://github.com/million12/docker-mariadb/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/million12/docker-mariadb.svg)](https://github.com/million12/docker-mariadb)
 [![GitHub Forks](https://img.shields.io/github/forks/million12/docker-mariadb.svg)](https://github.com/million12/docker-mariadb)  
@@ -7,7 +7,7 @@
 [![Pulls on Docker Hub](https://img.shields.io/docker/pulls/million12/mariadb.svg)](https://hub.docker.com/r/million12/mariadb)  
 [![](https://images.microbadger.com/badges/version/million12/mariadb.svg)](http://microbadger.com/images/million12/mariadb)
 [![](https://images.microbadger.com/badges/license/million12/mariadb.svg)](http://microbadger.com/images/million12/mariadb)
-[![](https://images.microbadger.com/badges/image/million12/mariadb.svg)](http://microbadger.com/images/million12/mariadb)  
+[![](https://images.microbadger.com/badges/image/million12/mariadb.svg)](http://microbadger.com/images/million12/mariadb)
 
 
 This is a MariaDB 10 Docker [million12/mariadb](https://registry.hub.docker.com/u/million12/mariadb/) image. Built on top of official [centos:centos7](https://registry.hub.docker.com/_/centos/) image. Inspired by [Tutum](https://github.com/tutumcloud)'s [tutum/mariadb](https://github.com/tutumcloud/tutum-docker-mariadb) image.
@@ -30,7 +30,7 @@ Run the image as daemon and specify MariaDB version 10.2:
 `docker run -d million12/mariadb:10.2`
 
 The first time that you run your container, a new user admin with all privileges will be created in MariaDB with a random password. To get the password, check the logs of the container by running:  
-`docker logs <CONTAINER_ID>`  
+`docker logs <CONTAINER_ID>`
 
 You will see an output like the following:
 
@@ -40,32 +40,32 @@ You will see an output like the following:
 
         mysql -uadmin -pCoFlnc3ZBS58 -h<host>
 
-    Please remember to change the above password as soon as possible!       
+    Please remember to change the above password as soon as possible!
     MariaDB user 'root' has no password but only allows local connections
     ========================================================================
-```  
+```
 In this case, `CoFlnc3ZBS58` is the password assigned to the `admin` user.
 
 ### Custom Password for user admin
-If you want to use a preset password instead of a random generated one, you can set the environment variable MARIADB_PASS to your specific password when running the container:  
+If you want to use a preset password instead of a random generated one, you can set the environment variable MARIADB_PASS to your specific password when running the container:
 
 `docker run -d -p 3306:3306 -e MARIADB_PASS="mypass" million12/mariadb`
 
 ### Mounting the database file volume from other containers
-One way to persist the database data is to store database files in another container. To do so, first create a container that holds database files:  
+One way to persist the database data is to store database files in another container. To do so, first create a container that holds database files:
 
-`docker run -d -v /var/lib/mysql --name db-data busybox:latest`  
+`docker run -d -v /var/lib/mysql --name db-data busybox:latest`
 
 This will create a new container and use its folder `/var/lib/mysql` to store MariaDB database files. You can specify any name of the container by using `--name` option, which will be used in next step.
 
-After this you can start your MariaDB image using volumes in the container created above (put the name of container in `--volumes-from`).  
+After this you can start your MariaDB image using volumes in the container created above (put the name of container in `--volumes-from`).
 
 `docker run -d --volumes-from db-data -p 3306:3306 million12/mariadb`
 
 ## Authors
 
 Author: Marcin Ryzycki (<marcin@m12.io>)  
-Author: Przemyslaw Ozgo (<linux@ozgo.info>)  
+Author: Przemyslaw Ozgo (<linux@ozgo.info>)
 
 ---
 
