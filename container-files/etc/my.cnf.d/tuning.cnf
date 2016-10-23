@@ -67,6 +67,11 @@ innodb_flush_neighbors = 0
 # but you are more likely to lose some data in case of a crash: it is only a good value for a replica.
 innodb_flush_log_at_trx_commit = 0
 
+# Conquer an InnoDB crash with `InnoDB: A long semaphore wait` error
+# See http://stackoverflow.com/questions/24860111/warning-a-long-semaphore-wait
+# See http://www.markleith.co.uk/2009/05/13/innodb_stats_on_metadata-innodb_adaptive_hash_index/
+innodb_adaptive_hash_index = off
+
 # Kill iddle connections after 10min
 wait_timeout = 600
 
