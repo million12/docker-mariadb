@@ -5,7 +5,8 @@ max_allowed_packet = 16M
 # queries. If sorted data does not fit into the sort buffer, a disk
 # based merge sort is used instead - See the "Sort_merge_passes"
 # status variable. Allocated per thread if sort is needed.
-sort_buffer_size = 1M
+# Comment out for now, the default in MariaDB 10.2 is 2M
+#sort_buffer_size = 1M
 
 # Size of the buffer used for doing full table scans.
 # Allocated per thread, if a full scan is needed.
