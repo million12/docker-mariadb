@@ -50,7 +50,7 @@ table_definition_cache = 1024
 # will ensure you use memory and not disks for most read operations.
 # Typical values are 50..75% of available RAM.
 innodb_buffer_pool_size = 768M # 75% of 1GB RAM
-innodb_log_file_size = 128M
+innodb_log_file_size = 192M # 25% of innodb_buffer_pool_size
 innodb_flush_method	= O_DIRECT
 
 # This setting should be set to 0 (disabled) on SSDs which do not have
