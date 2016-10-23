@@ -56,7 +56,7 @@ innodb_flush_method	= O_DIRECT
 # flushed to the redo logs only once a second, but that can be acceptable on some situations
 # for a master and that is definitely a good value for a replica. 0 is even faster
 # but you are more likely to lose some data in case of a crash: it is only a good value for a replica.
-innodb_flush_log_at_trx_commit = 2
+innodb_flush_log_at_trx_commit = 0
 
 
 [mysqldump]
