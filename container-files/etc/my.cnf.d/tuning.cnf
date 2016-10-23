@@ -53,6 +53,10 @@ innodb_buffer_pool_size = 768M # 75% of 1GB RAM
 innodb_log_file_size = 128M
 innodb_flush_method	= O_DIRECT
 
+# This setting should be set to 0 (disabled) on SSDs which do not have
+# any performance gains with sequential IO.
+innodb_flush_neighbors = 0
+
 # The default setting of 1 means that InnoDB is fully ACID compliant.
 # It is the best value when your primary concern is data safety, for instance on a master.
 # However it can have a significant overhead on systems with slow disks because of the
