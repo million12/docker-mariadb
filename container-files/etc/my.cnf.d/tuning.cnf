@@ -33,7 +33,11 @@ max_heap_table_size = 64M
 ## by setting query_cache_size = 0 (now the default on MySQL 5.6)
 ## and to use other ways to speed up read queries: good indexing, adding
 ## replicas to spread the read load or using an external cache.
-# query_cache_size  = 32M
+query_cache_type = on
+query_cache_size  = 32M
+query_cache_strip_comments = on
+query_cache_min_res_unit = 2K
+query_cache_limit = 256K
 
 thread_cache_size = 16
 table_open_cache = 2048
