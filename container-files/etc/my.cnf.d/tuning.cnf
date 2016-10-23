@@ -67,6 +67,8 @@ innodb_flush_neighbors = 0
 # but you are more likely to lose some data in case of a crash: it is only a good value for a replica.
 innodb_flush_log_at_trx_commit = 0
 
+# Kill iddle connections after 10min
+wait_timeout = 600
 
 [mysqldump]
 max-allowed-packet = 16M
