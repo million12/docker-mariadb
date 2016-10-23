@@ -40,7 +40,7 @@ query_cache_min_res_unit = 2K
 query_cache_limit = 256K
 
 thread_cache_size = 16
-table_open_cache = 2048
+table_open_cache = 4096
 table_definition_cache = 1024
 
 #
