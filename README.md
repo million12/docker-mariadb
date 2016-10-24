@@ -10,18 +10,13 @@
 [![](https://images.microbadger.com/badges/image/million12/mariadb.svg)](http://microbadger.com/images/million12/mariadb)  
 
 
-This is a MariaDB 10 Docker [million12/mariadb](https://registry.hub.docker.com/u/million12/mariadb/) image. Built on top of official [centos:centos7](https://registry.hub.docker.com/_/centos/) image. Inspired by [Tutum](https://github.com/tutumcloud)'s [tutum/mariadb](https://github.com/tutumcloud/tutum-docker-mariadb) image.
+This is a MariaDB 10 Docker [million12/mariadb](https://registry.hub.docker.com/u/million12/mariadb/) image. Built on top of official [centos:7](https://registry.hub.docker.com/_/centos/) image. Inspired by [Tutum](https://github.com/tutumcloud)'s [tutum/mariadb](https://github.com/tutumcloud/tutum-docker-mariadb) image.
 
-Note: be aware that, by default in this container, MariaDB is configured to use 1GB memory (innodb_buffer_pool_size in [tuning.cnf](container-files/etc/my.cnf.d/tuning.cnf)). If you try to run it on node with less memory, it will fail.
+Note: be aware that, by default in this container, MariaDB is configured to use ~1GB memory (innodb_buffer_pool_size in [tuning.cnf](container-files/etc/my.cnf.d/tuning.cnf)). If you try to run it on node with less memory, it will fail.
 
-Note: please use tags on Docker Hub for different versions.
+Please use tags on Docker Hub for different versions.
 
 ## Usage
-
-`docker pull million12/mariadb`
-
-Or, if you prefer to build it on your own:  
-`docker build -t million12/mariadb .`
 
 Run the image as daemon and bind it to port 3306:  
 `docker run -d -p 3306:3306 million12/mariadb`
@@ -51,16 +46,24 @@ If you want to use a preset password instead of a random generated one, you can 
 
 `docker run -d -p 3306:3306 -e MARIADB_PASS="mypass" million12/mariadb`
 
-### Mounting the database file volume from other containers
-One way to persist the database data is to store database files in another container. To do so, first create a container that holds database files:  
+### Data volumes
 
-`docker run -d -v /var/lib/mysql --name db-data busybox:latest`  
+MariaDB stores data in `/var/lib/mysql` location. Mount a volume
+to that location - below is an example with docker-compose how to do that:
 
-This will create a new container and use its folder `/var/lib/mysql` to store MariaDB database files. You can specify any name of the container by using `--name` option, which will be used in next step.
+```
+version: '2'
 
-After this you can start your MariaDB image using volumes in the container created above (put the name of container in `--volumes-from`).  
+volumes:
+  dbdata:
 
-`docker run -d --volumes-from db-data -p 3306:3306 million12/mariadb`
+services:
+  db:
+    image: million12/mariadb:latest
+    volumes:
+      - dbdata:/var/lib/mysql
+```
+
 
 ## Authors
 
@@ -69,4 +72,4 @@ Author: Przemyslaw Ozgo (<linux@ozgo.info>)
 
 ---
 
-**Sponsored by** [Typostrap.io - the new prototyping tool](http://typostrap.io/) for building highly-interactive prototypes of your website or web app. Built on top of TYPO3 Neos CMS and Zurb Foundation framework.
+**Sponsored by [Prototype Brewery](http://prototypebrewery.io/)** - the new prototyping tool for building highly-interactive prototypes of your website or web app. Built on top of [Neos CMS](https://www.neos.io/) and [Zurb Foundation](http://foundation.zurb.com/) framework.

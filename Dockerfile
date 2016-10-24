@@ -16,8 +16,6 @@ RUN \
     yum clean all && \
     rm -rf /var/lib/mysql/*
 
-# Add VOLUME to allow backup of data
-VOLUME ["/var/lib/mysql"]
 
 EXPOSE 3306
 CMD ["/run.sh"]
