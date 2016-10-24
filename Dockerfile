@@ -14,8 +14,10 @@ RUN \
     yum install -y epel-release && \
     yum install -y MariaDB-server hostname net-tools pwgen && \
     yum clean all && \
-    rm -rf /var/lib/mysql/*
+    rm -rf /var/lib/mysql/* && \
 
+    `# Install mysqltuner.pl` \
+    curl -sSL http://mysqltuner.pl/ -o mysqltuner.pl
 
 EXPOSE 3306
 CMD ["/run.sh"]
