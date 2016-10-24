@@ -18,12 +18,13 @@ read_buffer_size = 1M
 # Allocated per thread, when needed.
 read_rnd_buffer_size = 8M
 
-join_buffer_size = 1M
+join_buffer_size = 8M # should be equal to read_rnd_buffer_size?
 
 # Maximum allowed size for a single HEAP (in memory) table. This option
 # is a protection against the accidential creation of a very large HEAP
 # table which could otherwise use up all memory resources.
 max_heap_table_size = 64M
+tmp_table_size = 64M # Should be equal to max_heap_table_size
 
 ## Generally, it is unwise to set the query cache to be larger than 64-128M
 ## as the costs associated with maintaining the cache outweigh the performance
@@ -37,7 +38,7 @@ query_cache_type = on
 query_cache_size  = 32M
 query_cache_strip_comments = on
 query_cache_min_res_unit = 2K
-query_cache_limit = 256K
+# query_cache_limit = 256K # Default is 1M now
 
 thread_cache_size = 16
 table_open_cache = 4096
