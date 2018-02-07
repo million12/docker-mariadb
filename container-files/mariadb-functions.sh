@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/bin/bash
 
 #########################################################
 # Check in the loop (every 1s) if the database backend
@@ -20,7 +19,6 @@ function wait_for_db() {
   set -e
 }
 
-
 #########################################################
 # Check in the loop (every 1s) if the database backend
 # service is already available for connections.
@@ -34,7 +32,6 @@ function terminate_db() {
     if tail $ERROR_LOG | grep -s -E "mysqld .+? ended" $ERROR_LOG; then break; else sleep 0.5; fi
   done
 }
-
 
 #########################################################
 # Cals `mysql_install_db` if empty volume is detected.
